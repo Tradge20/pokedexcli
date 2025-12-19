@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-func callbackHelp() {
+func callbackHelp() error{
 	fmt.Println("Welcome to the Pokedex!")
 	fmt.Println("Usage:")
 	fmt.Println("")
@@ -14,4 +14,6 @@ func callbackHelp() {
 	}
 	
 	fmt.Println("")
+
+	return nil
 }
