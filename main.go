@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"/pokedex/internal/pokeapi"
+	"github.com/Tradge20/pokedexcli/internal/pokeapi"
 )
 
 

@@ -8,7 +8,7 @@ import (
 )
 
 func (c *Client) ListLocationAreas() (LocationAreaResp, error ) {
-	endpoint := "/location-area/"
+	endpoint := "/location-area?offset=0&limit=20/"
 	fullURL := baseURL + endpoint
 
 	req, err := http.NewRequest("GET", fullURL, nil)
