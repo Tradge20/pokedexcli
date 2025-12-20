@@ -7,7 +7,7 @@ import (
 	"fmt"
 )
 
-func startRepl() {
+func startRepl(cfg *config) {
 	scanner := bufio.NewScanner(os.Stdin)
 	for {
 		fmt.Print("Pokedex > ")
@@ -30,15 +30,20 @@ func startRepl() {
 			fmt.Println("Unknown command:")
 			continue
 		}
+		err := command.callback(cfg)
+		if err != nil {
+			fmt.Println(err)
+			
+		}
 
-		command.callback()		
+		command.callback(cfg)		
 	}
 }
 
 type cliCommand struct {
 	name        string
 	description string
-	callback func() error
+	callback func(*config) error
 }
 
 func getCommands() map[string]cliCommand {
@@ -52,6 +57,16 @@ func getCommands() map[string]cliCommand {
 			name:        "exit",
 			description: "Exit the Pokedex",
 			callback:    commandExit,   
+		},
+		"map": {
+			name:        "map",
+			description: "List some location areas",
+			callback:    callbackMap,
+		},
+		"mapb": {
+			name:        "map",
+			description: "List previous location areas",
+			callback:    callbackMapb,
 		},
 	}
 }

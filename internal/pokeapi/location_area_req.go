@@ -7,9 +7,12 @@ import (
 	"io"
 )
 
-func (c *Client) ListLocationAreas() (LocationAreaResp, error ) {
-	endpoint := "/location-area?offset=0&limit=20/"
+func (c *Client) ListLocationAreas(pageURL *string ) (LocationAreaResp, error ) {
+	endpoint := "/location-area/?offset=0&limit=20/"
 	fullURL := baseURL + endpoint
+	if pageURL != nil {
+		fullURL = *pageURL
+	}
 
 	req, err := http.NewRequest("GET", fullURL, nil)
 	if err != nil {
@@ -37,5 +40,5 @@ func (c *Client) ListLocationAreas() (LocationAreaResp, error ) {
 		return LocationAreaResp{}, err
 	}
 
-	return LocationAreaResp{}, nil
+	return locationAreaResp, nil
 }

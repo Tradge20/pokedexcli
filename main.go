@@ -1,24 +1,22 @@
 package main
 
 import (
-	"fmt"
-	"log"
+	
 
 	"github.com/Tradge20/pokedexcli/internal/pokeapi"
 )
 
+type config struct {
+	pokeapiClient pokeapi.Client
+	nextLocationAreaURL *string
+	previousLocationArea *string
+}
 
 
 func main() {
-
-	pokeapiClient := pokeapi.NewClient()
-
-	resp, err := pokeapiClient.ListLocationAreas()
-	if err != nil {
-		log.Fatal(err)
+	cfg := config{
+		pokeapiClient: pokeapi.NewClient(),
 	}
-	fmt.Println(resp)
-
-	// startRepl()
+	startRepl(&cfg)
 }
 
