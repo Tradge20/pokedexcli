@@ -6,17 +6,13 @@ import (
 	"github.com/Tradge20/pokedexcli/internal/pokeapi"
 )
 
-type config struct {
-	pokeapiClient pokeapi.Client
-	nextLocationAreaURL *string
-	previousLocationArea *string
-}
 
 
 func main() {
-	cfg := config{
-		pokeapiClient: pokeapi.NewClient(time.Hour),
+	pokeClient := pokeapi.NewClient(5*time.Second, time.Minute*5)
+	cfg := &config{
+		pokeapiClient: pokeClient,
 	}
-	startRepl(&cfg)
+	startRepl(cfg)
 }
 

@@ -5,7 +5,14 @@ import (
 	"bufio"
 	"os"
 	"fmt"
+	"github.com/Tradge20/pokedexcli/internal/pokeapi"
 )
+
+type config struct {
+	pokeapiClient pokeapi.Client
+	nextLocationAreaURL *string
+	previousLocationArea *string
+}
 
 func startRepl(cfg *config) {
 	scanner := bufio.NewScanner(os.Stdin)
@@ -13,10 +20,8 @@ func startRepl(cfg *config) {
 		fmt.Print("Pokedex > ")
 
 		scanner.Scan()
-		text := scanner.Text()
 
-		cleaned := cleanInput(text)
-
+		cleaned := cleanInput(scanner.Text())
 		if len(cleaned) == 0 {
 			continue
 		}
@@ -35,8 +40,7 @@ func startRepl(cfg *config) {
 			fmt.Println(err)
 			
 		}
-
-		command.callback(cfg)		
+	
 	}
 }
 

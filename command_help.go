@@ -11,6 +11,5 @@ func callbackHelp(cfg *config) error{
 		fmt.Printf("%v: %v\n", cmd.name, cmd.description)
 	}
 	fmt.Println("")
-
 	return nil
 }
