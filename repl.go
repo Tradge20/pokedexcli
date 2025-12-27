@@ -12,6 +12,7 @@ type config struct {
 	pokeapiClient pokeapi.Client
 	nextLocationAreaURL *string
 	previousLocationArea *string
+	caughtPokemons map[string]pokeapi.Pokemon
 }
 
 func startRepl(cfg *config) {
@@ -27,6 +28,10 @@ func startRepl(cfg *config) {
 		}
 
 		commandName := cleaned[0]
+		args := []string{}
+		if len(cleaned) > 1 {
+			args = cleaned[1:]
+		}
 
 		availableCommands := getCommands()
 
@@ -35,7 +40,7 @@ func startRepl(cfg *config) {
 			fmt.Println("Unknown command:")
 			continue
 		}
-		err := command.callback(cfg)
+		err := command.callback(cfg, args...)
 		if err != nil {
 			fmt.Println(err)
 			
@@ -47,7 +52,7 @@ func startRepl(cfg *config) {
 type cliCommand struct {
 	name        string
 	description string
-	callback func(*config) error
+	callback func(*config, ...string) error
 }
 
 func getCommands() map[string]cliCommand {
@@ -71,6 +76,16 @@ func getCommands() map[string]cliCommand {
 			name:        "map",
 			description: "List previous location areas",
 			callback:    callbackMapb,
+		},
+		"explore": {
+			name:        "explore (location area)",
+			description: "Explore a location area to see which Pokemon are there",
+			callback:    callbackExplore,
+		},
+		"catch": {
+			name:        "catch (pokemon)",
+			description: "Attempt to catch a pokemon",
+			callback:    callbackCatch,
 		},
 	}
 }
